@@ -1,0 +1,22 @@
+name: ForwardToProxy
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub event payload
+        env:
+          EVENT_PAYLOAD: ${{ toJSON(github.event) }}
+        run: |
+          echo "===== github.event payload ====="
+          echo "$EVENT_PAYLOAD"
+
+      - name: Call Proxy API
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: https://horribly-hopeful-wolf.ngrok-free.app/webhooks/push
+          method: 'POST'
+          data: ${{ toJSON(github.event) }}
