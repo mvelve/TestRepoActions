@@ -1,0 +1,15 @@
+name: ForwardToProxy
+  on:
+    push:
+      branches: [ "main" ]
+      
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Call Proxy API
+          uses: fjogeleit/http-request-action@v1
+          with:
+            url: 'insertAPIURl.com'
+            method: 'POST'
+            file: ${{ github.event_path }}
