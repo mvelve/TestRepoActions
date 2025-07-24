@@ -1,7 +1,14 @@
 name: ForwardToProxy
+
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      trigger_reason:
+        description: 'Reason for manual trigger'
+        required: false
+        default: 'Manual dispatch'
 
 jobs:
   build:
